@@ -5,21 +5,16 @@ from enum import Enum
 
 DIGITS_ONLY_PATTERN = re.compile('^\d+$')
 LETTERS_ONLY_PATTERN = re.compile('^[a-zA-Z]+$')
-LETTERS_DIGITS_PATTERN = re.compile('^[a-zA-Z]+\d+$')
-DIGITS_LETTERS_PATTERN = re.compile('^\d+[a-zA-Z]+$')
-LETTERS_DIGITS_LETTERS_PATTERN = re.compile('^[a-zA-Z]+\d+[a-zA-Z]+$')
-SPECIAL_CHARS_END_PATTERN = re.compile('^\w+\W+$')
-SPECIAL_CHARS_START_PATTERN = re.compile('^\W+\w+$')
+LETTERS_DIGITS_PATTERN = re.compile('^[a-zA-Z]+\d+[a-zA-Z\d]*$')
+DIGITS_LETTERS_PATTERN = re.compile('^\d+[a-zA-Z]+[a-zA-Z\d]*$')
+SPECIAL_CHARS_PATTERN = re.compile('.*[^a-zA-Z\d]+.*')
 
 class PasswordModel(Enum):
     UNKNOWN = 0
     DIGITS_ONLY = 1
     LETTERS_ONLY = 2
-    LETTERS_DIGITS = 3
-    DIGITS_LETTERS = 4
-    LETTERS_DIGITS_LETTERS = 5
-    SPECIAL_CHARS_END = 6
-    SPECIAL_CHARS_START = 7
+    MIXED_LETTERS_DIGITS = 3
+    WITH_SPECIAL_CHARS = 4
 
 def find(password):
     match = DIGITS_ONLY_PATTERN.match(password)
@@ -32,22 +27,14 @@ def find(password):
 
     match = LETTERS_DIGITS_PATTERN.match(password)
     if (match):
-        return PasswordModel.LETTERS_DIGITS
+        return PasswordModel.MIXED_LETTERS_DIGITS
 
     match = DIGITS_LETTERS_PATTERN.match(password)
     if (match):
-        return PasswordModel.DIGITS_LETTERS
+        return PasswordModel.MIXED_LETTERS_DIGITS
 
-    match = LETTERS_DIGITS_LETTERS_PATTERN.match(password)
+    match = SPECIAL_CHARS_PATTERN.match(password)
     if (match):
-        return PasswordModel.LETTERS_DIGITS_LETTERS
-
-    match = SPECIAL_CHARS_END_PATTERN.match(password)
-    if (match):
-        return PasswordModel.SPECIAL_CHARS_END
-
-    match = SPECIAL_CHARS_START_PATTERN.match(password)
-    if (match):
-        return PasswordModel.SPECIAL_CHARS_START
+        return PasswordModel.WITH_SPECIAL_CHARS
 
     return PasswordModel.UNKNOWN
