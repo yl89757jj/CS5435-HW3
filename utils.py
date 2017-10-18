@@ -1,5 +1,27 @@
 #!/usr/bin/env python3
 
+import re
+from enum import Enum
+
+DIGIT_ONLY_PATTERN = re.compile('^\d+$')
+LETTER_ONLY_PATTERN = re.compile('^[a-zA-Z]+$')
+
+class PasswordModel(Enum):
+    UNKNOWN = 0
+    DIGIT_ONLY = 1
+    LETTER_ONLY = 2
+
+def find_password_model(password):
+    match = DIGIT_ONLY_PATTERN.match(password)
+    if (match):
+        return PasswordModel.DIGIT_ONLY
+
+    match = LETTER_ONLY_PATTERN.match(password)
+    if (match):
+        return PasswordModel.LETTER_ONLY
+
+    return PasswordModel.UNKNOWN
+
 # TODO: update this logic to handle passwords with spaces
 def load_rockyou_dataset():
     passwords = {}
