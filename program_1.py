@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 
+import sys
 import password_database
 import password_model
 
-# This is an example of loading the dataset and printing the count of password '123456'
-#PASSWORDS = password_database.load_rockyou_dataset()
-#print(PASSWORDS['123456'])
+# TODO: Parse input parameters
+print(sys.argv[1:])
+
+# TODO: This is an example of loading the dataset and printing the count of password '123456'
+PASSWORDS = password_database.load_rockyou_dataset()
+print(PASSWORDS['123456'])
 
 # This is an example testing the password_model find method
 # Outputs PasswordModel.DIGIT_ONLY
