@@ -8,6 +8,8 @@ LETTERS_ONLY_PATTERN = re.compile('^[a-zA-Z]+$')
 LETTERS_DIGITS_PATTERN = re.compile('^[a-zA-Z]+\d+$')
 DIGITS_LETTERS_PATTERN = re.compile('^\d+[a-zA-Z]+$')
 LETTERS_DIGITS_LETTERS_PATTERN = re.compile('^[a-zA-Z]+\d+[a-zA-Z]+$')
+SPECIAL_CHARS_END_PATTERN = re.compile('^\w+\W+$')
+SPECIAL_CHARS_START_PATTERN = re.compile('^\W+\w+$')
 
 class PasswordModel(Enum):
     UNKNOWN = 0
@@ -16,6 +18,8 @@ class PasswordModel(Enum):
     LETTERS_DIGITS = 3
     DIGITS_LETTERS = 4
     LETTERS_DIGITS_LETTERS = 5
+    SPECIAL_CHARS_END = 6
+    SPECIAL_CHARS_START = 7
 
 def find(password):
     match = DIGITS_ONLY_PATTERN.match(password)
@@ -37,5 +41,13 @@ def find(password):
     match = LETTERS_DIGITS_LETTERS_PATTERN.match(password)
     if (match):
         return PasswordModel.LETTERS_DIGITS_LETTERS
+
+    match = SPECIAL_CHARS_END_PATTERN.match(password)
+    if (match):
+        return PasswordModel.SPECIAL_CHARS_END
+
+    match = SPECIAL_CHARS_START_PATTERN.match(password)
+    if (match):
+        return PasswordModel.SPECIAL_CHARS_START
 
     return PasswordModel.UNKNOWN
