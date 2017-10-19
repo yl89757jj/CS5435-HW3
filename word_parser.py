@@ -2,6 +2,8 @@ from abc import ABCMeta, abstractmethod
 import unittest
 import functools as ft
 import re
+from collections import defaultdict
+from password_database import load_rockyou_dataset
 
 
 class WordSnippet:
@@ -46,7 +48,7 @@ class Password:
   snip_list = []
 
   def __init__(self, _password):
-    assert _password != self.password
+    # assert _password != self.password
 
     self.password = _password
     for snippet_type in [Letters, Numbers, Symbols]:
@@ -76,5 +78,35 @@ class TestPasswordSnippet(unittest.TestCase):
     self.assertEqual(Password("chamillionaire").key_strings(), "L*14")
 
 
+def categorize(password_strings):
+  categories = defaultdict(list)
+  for password_string in password_strings:
+    p0 = Password(password_string)
+    categories[p0.key_strings()].append(password_string)
+
+  return categories
+
+
+def main():
+  """Read 70,000 of the rockyou dataset, parse them, then output a count per parse-description"""
+  passwords = []
+  i = 0
+
+  with open('rockyou-withcount.txt', encoding='raw_unicode_escape') as passwords_file:
+    for password_line in passwords_file:
+      passwords.append(password_line[8:].strip())
+      i += 1
+      if i >= 70000:
+        break
+
+  categories = categorize(passwords)
+
+  file = open("passwords_parsed_70k.txt", "w")
+  for category_key in categories:
+    category = categories[category_key]
+    file.write("%d6\t%s\n" % (len(category), category_key))
+  file.close()
+
+
 if __name__ == '__main__':
-  unittest.main()
+  main()

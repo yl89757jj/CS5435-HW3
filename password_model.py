@@ -9,12 +9,14 @@ LETTERS_DIGITS_PATTERN = re.compile('^[a-zA-Z]+\d+[a-zA-Z\d]*$')
 DIGITS_LETTERS_PATTERN = re.compile('^\d+[a-zA-Z]+[a-zA-Z\d]*$')
 SPECIAL_CHARS_PATTERN = re.compile('.*[^a-zA-Z\d]+.*')
 
+
 class PasswordModel(Enum):
     UNKNOWN = 0
     DIGITS_ONLY = 1
     LETTERS_ONLY = 2
     MIXED_LETTERS_DIGITS = 3
     WITH_SPECIAL_CHARS = 4
+
 
 def find(password):
     match = DIGITS_ONLY_PATTERN.match(password)
