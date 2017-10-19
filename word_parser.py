@@ -64,7 +64,7 @@ class Password:
         - `chargers21` produces `L*8 N*2`
         - `chamillionaire` produces `L*14`
     """
-    return ft.reduce(lambda kstr, sn1: "%s%s" % (kstr, sn1[1].key_string()), self.snip_list, "")[1:]
+    return ft.reduce(lambda kstr, sn1: "%s %s" % (kstr, sn1[1].key_string()), self.snip_list, "")[1:]
 
 
 class TestPasswordSnippet(unittest.TestCase):
