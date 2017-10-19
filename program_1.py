@@ -18,20 +18,20 @@ print(password_model.find('123456'))
 # Outputs PasswordModel.LETTER_ONLY
 print(password_model.find('helloworld'))
 
-# Outputs PasswordModel.DIGITS_LETTERS
+# Outputs PasswordModel.MIXED_LETTERS_DIGITS
 print(password_model.find('123jennifer'))
 
-# Outputs PasswordModel.LETTERS_DIGITS
+# Outputs PasswordModel.MIXED_LETTERS_DIGITS
 print(password_model.find('jennifer123'))
 
-# Outputs PasswordModel.LETTERS_DIGITS_LETTERS
+# Outputs PasswordModel.MIXED_LETTERS_DIGITS
 print(password_model.find('cat5mouse'))
 
-# Outputs PasswordModel.SPECIAL_CHARS_END
-print(password_model.find('qwerty!@#'))
+# Outputs PasswordModel.WITH_SPECIAL_CHARS
+print(password_model.find('qwerty123!@#'))
 
-# Outputs PasswordModel.SPECIAL_CHARS_START
+# Outputs PasswordModel.WITH_SPECIAL_CHARS
 print(password_model.find('!@#qwerty'))
 
-# Outputs PasswordModel.UNKNOWN
+# Outputs PasswordModel.WITH_SPECIAL_CHARS
 print(password_model.find('    jhkjh     '))
