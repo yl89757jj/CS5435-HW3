@@ -24,7 +24,7 @@ class WordSnippet:
     pass
 
   def key_string(self):
-    return "%s*%d" % (self.keyword, len(self.data))
+    return "%s%d" % (self.keyword, len(self.data))
 
 
 class Letters(WordSnippet):
@@ -64,18 +64,18 @@ class Password:
         - `chargers21` produces `L*8 N*2`
         - `chamillionaire` produces `L*14`
     """
-    return ft.reduce(lambda kstr, sn1: "%s %s" % (kstr, sn1[1].key_string()), self.snip_list, "")[1:]
+    return ft.reduce(lambda kstr, sn1: "%s%s" % (kstr, sn1[1].key_string()), self.snip_list, "")[1:]
 
 
 class TestPasswordSnippet(unittest.TestCase):
   def test_letters_symbols(self):
-    self.assertEqual(Password("%^*hello(*&1348").key_strings(), "S*3 L*5 S*3 N*4")
+    self.assertEqual(Password("%^*hello(*&1348").key_strings(), "S3L5S3N4")
 
   def test_chargers21(self):
-    self.assertEqual(Password("chargers21").key_strings(), "L*8 N*2")
+    self.assertEqual(Password("chargers21").key_strings(), "L8N2")
 
   def test_chamillionaire(self):
-    self.assertEqual(Password("chamillionaire").key_strings(), "L*14")
+    self.assertEqual(Password("chamillionaire").key_strings(), "L14")
 
 
 def categorize(password_strings):
